@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Trajectory : MonoBehaviour
 {
-    [SerializeField] private bool wersjaZOpadem = true;
     [SerializeField] private LayerMask wallMask;
     [SerializeField] int dotsNumber;
     [SerializeField] GameObject dotsParent;
@@ -16,18 +15,13 @@ public class Trajectory : MonoBehaviour
     Transform[] dotsList;
 
     Vector2 pos;
-    //dot pos
     float timeStamp;
-    float totalTimeStamp;
     private bool reflected = false;
     private bool resetTimeStamp = true;
 
-    //--------------------------------
     void Start()
     {
-        //hide trajectory in the start
         Hide();
-        //prepare dots
         PrepareDots();
     }
 
@@ -53,8 +47,7 @@ public class Trajectory : MonoBehaviour
     public void UpdateDots(Vector3 ballPos, Vector2 forceApplied)
     {
         timeStamp = dotSpacing;
-        totalTimeStamp = dotSpacing;
-        int maxreflections = 3;
+        int maxreflections = 1;
         int currReflections = 0;
         float range = 2f;
 
@@ -69,31 +62,15 @@ public class Trajectory : MonoBehaviour
             }
 
 
-            if (wersjaZOpadem)
+            if (reflected)
             {
-                if (reflected)
-                {
-                    pos.x = ((ballPos.x + forceApplied.x * timeStamp));
-                    pos.y = (float)((((ballPos.y - 1) + forceApplied.y * timeStamp)) - (Physics2D.gravity.magnitude * timeStamp * timeStamp * 0.87) * 2); // tu niepotrzebne usun float i *0.8 gdyby cos nie tak
-                }
-                else
-                {
-                    pos.x = (ballPos.x + forceApplied.x * timeStamp);
-                    pos.y = ((ballPos.y - 1) + forceApplied.y * timeStamp) - (Physics2D.gravity.magnitude * timeStamp * timeStamp) / 2;
-                }
+                pos.x = ((ballPos.x + forceApplied.x * timeStamp));
+                pos.y = (float)((((ballPos.y - 1) + forceApplied.y * timeStamp)) - (Physics2D.gravity.magnitude * timeStamp * timeStamp * 0.95f) * 2);
             }
             else
             {
-                if (reflected)
-                {
-                    pos.x = ((ballPos.x + forceApplied.x * timeStamp));
-                    pos.y = (((ballPos.y - 1) + forceApplied.y * timeStamp)) - (Physics2D.gravity.magnitude * timeStamp * timeStamp);
-                }
-                else
-                {
-                    pos.x = (ballPos.x + forceApplied.x * timeStamp);
-                    pos.y = ((ballPos.y - 1) + forceApplied.y * timeStamp);
-                }
+                pos.x = (ballPos.x + forceApplied.x * timeStamp);
+                pos.y = ((ballPos.y - 1) + forceApplied.y * timeStamp) - (Physics2D.gravity.magnitude * timeStamp * timeStamp * 0.95f) / 2;
             }
 
 
@@ -119,33 +96,10 @@ public class Trajectory : MonoBehaviour
                     resetTimeStamp = true;
                 }
             }
-            /*else
-            {
-                if (i > 4)
-                {
-                    range = Vector2.Distance(dotsList[i - 1].position, dotsList[i - 2].position);
-                }
-
-                RaycastHit2D hit = Physics2D.Raycast(pos - forceApplied / 10, forceApplied, range, wallMask);
-
-                if (hit.collider != null)
-                {
-                    Debug.DrawLine(pos, hit.point, Color.green);
-
-                    forceApplied = Vector2.Reflect(forceApplied, hit.normal);
-                    ballPos = hit.point;
-                    reflected = true;
-                    currReflections++;
-
-                    resetTimeStamp = true;
-                }
-            }*/
-
 
             dotsList[i].position = pos;
 
             timeStamp += dotSpacing;
-            totalTimeStamp += dotSpacing;
         }
 
         reflected = false;
@@ -159,7 +113,6 @@ public class Trajectory : MonoBehaviour
 
     public void Hide()
     {
-        Debug.Log("1");
         dotsParent.SetActive(false);
     }
 }
