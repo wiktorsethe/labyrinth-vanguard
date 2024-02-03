@@ -8,34 +8,34 @@ public class ScoreManager : MonoBehaviour
 	[SerializeField] private TMP_Text textScore;
 	[SerializeField] private TMP_Text textHighscore;
 
-	[SerializeField] private int highscore;
-
-	//public PlayerData playerData;
+	private int highscore;
+	private int score = 0;
+	[SerializeField] private PlayerData playerData;
 	//public SaveManager save;
 	void Start()
 	{
 		//save = GameObject.FindObjectOfType(typeof(SaveManager)) as SaveManager;
 		textScore.text = "Score: 0";
 
-		//highscore = GameDataMenager.GetHighscore(levelIndex);
+		highscore = playerData.highscore;
 	}
 	private void Update()
 	{
-		textHighscore.text = "Highscore: " + highscore.ToString();
+		//textHighscore.text = "Highscore: " + highscore.ToString();
 	}
 
-	public void UpdateScore(int score)
+	public void UpdateScore(int value)
 	{
-		textScore.text = "Score: " + (score / 3) * 10;
-
-		PlayerPrefs.SetInt("score", (score / 3) * 10);
-
-		if (((score / 3) * 10) > highscore)
-		{
-			highscore = ((score / 3) * 10);
-			//GameDataMenager.SetHighscore(highscore, levelIndex);
-			//playerData.highscores[levelIndex] = highscore;
-			//save.LocalSaveGame();
+		if (score < value)
+        {
+			textScore.text = "Score: " + (value / 3) * 10;
+			score = value;
+			if (((value / 3) * 10) > highscore)
+			{
+				highscore = ((value / 3) * 10);
+				playerData.highscore = highscore;
+				//save.LocalSaveGame();
+			}
 		}
 	}
 }

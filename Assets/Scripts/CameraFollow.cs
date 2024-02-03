@@ -14,11 +14,11 @@ public class CameraFollow : MonoBehaviour
 	[SerializeField] float startLimit = 2f;
 	[SerializeField] float maxDistanceBeforeLose = 7f;
 	[SerializeField] private float smoothSpeed = 1f;
-	private PlayerDeath playerDeath;
+	private Player player;
 
 	void Start()
 	{
-		playerDeath = GameObject.FindObjectOfType(typeof(PlayerDeath)) as PlayerDeath;
+		player = GameObject.FindObjectOfType(typeof(Player)) as Player;
 	}
 	void LateUpdate()
 	{
@@ -29,7 +29,7 @@ public class CameraFollow : MonoBehaviour
 
 		if (distance < -maxDistanceBeforeLose)
 		{
-			playerDeath.Die();
+			player.Die();
 			Time.timeScale = 1f;
 		}
 		else if (distance > 1)
@@ -40,7 +40,7 @@ public class CameraFollow : MonoBehaviour
 		else
 		{
 			targetPosition = new Vector3(target.position.x, transform.position.y + speed, transform.position.z);
-			transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime);
+			transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
 		}
 	}
 }
