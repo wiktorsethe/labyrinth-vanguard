@@ -6,7 +6,6 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
 	[SerializeField] private TMP_Text textScore;
-	[SerializeField] private TMP_Text textHighscore;
 
 	private int highscore;
 	private int score = 0;
@@ -19,11 +18,6 @@ public class ScoreManager : MonoBehaviour
 
 		highscore = playerData.highscore;
 	}
-	private void Update()
-	{
-		//textHighscore.text = "Highscore: " + highscore.ToString();
-	}
-
 	public void UpdateScore(int value)
 	{
 		if (score < value)
