@@ -9,6 +9,7 @@ public class DetectCollision : MonoBehaviour
     {
         gameManager = GameObject.FindObjectOfType(typeof(GameManager)) as GameManager;
     }
+    //DO POPRAWY ZNOWU NA NAJWY¯SZY Y BO MOZNA SKAKAC PO JEDNEJ PLATFORMIE WIECZNOSC
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Platform") || collision.gameObject.CompareTag("Wall"))
