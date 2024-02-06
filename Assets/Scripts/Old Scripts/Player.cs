@@ -26,23 +26,19 @@ public class Player : MonoBehaviour
     [Space(10f)]
 
     [Header("Other Scripts")]
-    private PlayerMovementController playerMovementController;
-    private ScoreManager scoreManager;
+    float x;
+    //private PlayerMovementController playerMovementController;
     //public SaveManager save;
-    //public PlayerData playerData;
-
-    private void Start()
-    {
-        //save = GameObject.FindObjectOfType(typeof(SaveManager)) as SaveManager;
-        playerMovementController = GameObject.FindObjectOfType(typeof(PlayerMovementController)) as PlayerMovementController;
-        scoreManager = GameObject.FindObjectOfType(typeof(ScoreManager)) as ScoreManager;
-    }
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         //ChangePlayerSkin();
     }
-
+    private void Start()
+    {
+        //save = GameObject.FindObjectOfType(typeof(SaveManager)) as SaveManager;
+        //playerMovementController = GameObject.FindObjectOfType(typeof(PlayerMovementController)) as PlayerMovementController;
+    }
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
@@ -83,12 +79,6 @@ public class Player : MonoBehaviour
                 Flip();
             }
         }
-
-        if (collision.gameObject.CompareTag("Platform"))
-        {
-            scoreManager.UpdateScore((int)transform.position.y);
-        }
-
         if (collision.gameObject.CompareTag("Trap"))
         {
             Die();
@@ -99,14 +89,13 @@ public class Player : MonoBehaviour
             Die();
         }
     }
-    void Flip()
+    private void Flip()
     {
         Vector3 currentScale = gameObject.transform.localScale;
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
         facingRight = !facingRight;
     }
-
     public void ActivateRb()
     {
         rb.isKinematic = false;
@@ -127,7 +116,7 @@ public class Player : MonoBehaviour
         {
             this.GetComponentsInChildren<SpriteRenderer>()[i].enabled = false;
         }
-        playerMovementController.enabled = false;
+        //playerMovementController.enabled = false;
         rb.bodyType = RigidbodyType2D.Static;
         //gameMenu.SetActive(false);
         //menu.DOAnchorPos(new Vector2(0, 0), speed).SetUpdate(true);
@@ -138,7 +127,7 @@ public class Player : MonoBehaviour
         }
         //save.SaveGameBoth();
     }
-    IEnumerator playDeath()
+    private IEnumerator playDeath()
     {
         isDeath = true;
         //deathSprite.enabled = true;
@@ -147,24 +136,6 @@ public class Player : MonoBehaviour
         yield return new WaitForEndOfFrame();
     }
     /*
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Collect"))
-        {
-            collectSound.Play();
-            Destroy(collision.gameObject);
-            //GameDataMenager.AddDiamonds(3);
-            playerData.diamonds += 3;
-            collectItems += 3;
-            Instantiate(diamondsPickup, collision.gameObject.transform.position, Quaternion.identity);
-            if (collectItems >= PlayerPrefs.GetInt("collectItems"))
-            {
-                PlayerPrefs.SetInt("collectItems", collectItems);
-            }
-            save.LocalSaveGame();
-        }
-    }
-    
     public void ChangePlayerSkin()
     {
         Outfit outfit = playerData.GetSelectedOutfit();
