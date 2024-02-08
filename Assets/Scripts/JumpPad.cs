@@ -11,7 +11,8 @@ public class JumpPad : MonoBehaviour
         if (otherRigidbody != null)
         {
             float jumpForce = 10f;
-            otherRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            Vector2 velocity = otherRigidbody.velocity;
+            otherRigidbody.AddForce(Vector2.up * (velocity.magnitude + jumpForce), ForceMode2D.Impulse);
         }
     }
 }
