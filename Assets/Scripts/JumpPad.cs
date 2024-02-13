@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class JumpPad : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Rigidbody2D otherRigidbody = other.GetComponent<Rigidbody2D>();
+        Rigidbody2D otherRigidbody = collision.GetComponent<Rigidbody2D>();
 
         if (otherRigidbody != null)
         {
