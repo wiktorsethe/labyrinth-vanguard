@@ -9,8 +9,7 @@ public class Crusher : MonoBehaviour
     [SerializeField] private Transform up;
     [SerializeField] private Transform down;
     [SerializeField] private GameObject obj;
-    private bool chop;
-
+    private bool isChoping = false;
     private void Start()
     {
         MoveDown();
@@ -20,13 +19,31 @@ public class Crusher : MonoBehaviour
         float duration = Vector2.Distance(up.position, down.position) / downSpeed;
         obj.transform.DOMove(down.position, duration)
         .SetEase(Ease.InSine)
-        .OnComplete(MoveUp);
+        .OnComplete(OnCompleteCallback);
     }
     private void MoveUp()
     {
         float duration = Vector2.Distance(up.position, down.position) / upSpeed;
         obj.transform.DOMove(up.position, duration)
         .SetEase(Ease.Linear)
-        .OnComplete(MoveDown);
+        .OnComplete(OnCompleteCallback);
+    }
+    private void OnCompleteCallback()
+    {
+        StartCoroutine("ChangeStatus");
+    }
+    private IEnumerator ChangeStatus()
+    {
+        yield return new WaitForSeconds(2);
+        if (isChoping)
+        {
+            MoveUp();
+            isChoping = false;
+        }
+        else
+        {
+            MoveDown();
+            isChoping = true;
+        }
     }
 }

@@ -16,25 +16,28 @@ public class ObjectDrag : MonoBehaviour
     }
     private void OnMouseDrag()
     {
-        if (!IsCollidingWithPlayer())
+        transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - difference;
+
+        if (IsCollidingWithPlayer())
         {
-            transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - difference;
+            GetComponent<Collider2D>().enabled = false;
+        }
+        else
+        {
+            if(!GetComponent<Collider2D>().enabled)
+            GetComponent<Collider2D>().enabled = true;
         }
     }
     private bool IsCollidingWithPlayer()
     {
-        // SprawdŸ kolizjê z obiektami o tagu "Player" przy u¿yciu overlap box
-        
         Collider2D[] colliders = Physics2D.OverlapBoxAll(boxCollider.bounds.center, boxCollider.bounds.size, 0f);
-
         foreach (Collider2D collider in colliders)
         {
             if (collider.CompareTag("Player"))
             {
-                return true; // Jeœli jest kolizja z graczem, zwróæ true
+                return true;
             }
         }
-
-        return false; // Jeœli nie ma kolizji z graczem, zwróæ false
+        return false;
     }
 }

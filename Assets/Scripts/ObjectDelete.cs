@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class ObjectDelete : MonoBehaviour
 {
+    private Vector2 size;
+    private Vector2 offset;
+    [SerializeField] private float bonusSize;
     private void Start()
     {
         transform.Find("Canvas").transform.Find("Button").gameObject.SetActive(false);
+        size = GetComponent<BoxCollider2D>().size;
     }
-    public void DeletePlatform()
+    public void DeleteObject()
     {
         Time.timeScale = 1f;
-        Debug.Log("Platform Deleted");
         Destroy(gameObject);
     }
-    public void DeleteJumpPad()
-    {
-        Time.timeScale = 1f;
-        Debug.Log("Jump Pad Deleted");
-        Destroy(gameObject);
-    }
+    
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -31,14 +29,14 @@ public class ObjectDelete : MonoBehaviour
             if (hitCollider != null && hitCollider.gameObject == gameObject)
             {
                 Time.timeScale = 0.1f;
-                GetComponent<BoxCollider2D>().size = new Vector2(9f, 1.6f);
-                GetComponent<BoxCollider2D>().offset = new Vector2(-1f, 0f);
+                GetComponent<BoxCollider2D>().size = new Vector2(size.x + bonusSize, size.y);
+                GetComponent<BoxCollider2D>().offset = new Vector2(offset.x - (bonusSize / 2), 0f);
                 transform.Find("Canvas").transform.Find("Button").gameObject.SetActive(true);
             }
             else
             {
                 Time.timeScale = 1f;
-                GetComponent<BoxCollider2D>().size = new Vector2(7f, 1.6f);
+                GetComponent<BoxCollider2D>().size = new Vector2(size.x, size.y);
                 GetComponent<BoxCollider2D>().offset = new Vector2(0f, 0f);
                 transform.Find("Canvas").transform.Find("Button").gameObject.SetActive(false);
             }

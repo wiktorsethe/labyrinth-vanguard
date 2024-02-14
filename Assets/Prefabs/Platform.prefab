@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54e5b5ab31f49e4fa5c56e39b56ac34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bonusSize: 2
 --- !u!1 &3501682500526742619
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +262,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5114091366519080226}
         m_TargetAssemblyTypeName: ObjectDelete, Assembly-CSharp
-        m_MethodName: DeletePlatform
+        m_MethodName: DeleteObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
