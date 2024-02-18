@@ -12,26 +12,26 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         mainMenu.DOAnchorPos(Vector2.zero, speed).SetUpdate(true);
-        optionsMenu.DOAnchorPos(new Vector2(-500, 0), speed).SetUpdate(true);
-        levelsMenu.DOAnchorPos(new Vector2(-500, 0), speed).SetUpdate(true);
+        optionsMenu.DOAnchorPos(new Vector2(-800, 0), speed).SetUpdate(true);
+        levelsMenu.DOAnchorPos(new Vector2(-800, 0), speed).SetUpdate(true);
     }
     public void Play()
     {
-        mainMenu.DOAnchorPos(new Vector2(500, 0), speed).SetUpdate(true);
-        optionsMenu.DOAnchorPos(new Vector2(-500, 0), speed).SetUpdate(true);
+        mainMenu.DOAnchorPos(new Vector2(800, 0), speed).SetUpdate(true);
+        optionsMenu.DOAnchorPos(new Vector2(-800, 0), speed).SetUpdate(true);
         levelsMenu.DOAnchorPos(new Vector2(0, 0), speed).SetUpdate(true);
     }
     public void Options()
     {
-        mainMenu.DOAnchorPos(new Vector2(500, 0), speed).SetUpdate(true);
+        mainMenu.DOAnchorPos(new Vector2(800, 0), speed).SetUpdate(true);
         optionsMenu.DOAnchorPos(new Vector2(0, 0), speed).SetUpdate(true);
-        levelsMenu.DOAnchorPos(new Vector2(-500, 0), speed).SetUpdate(true);
+        levelsMenu.DOAnchorPos(new Vector2(-800, 0), speed).SetUpdate(true);
     }
     public void Main()
     {
         mainMenu.DOAnchorPos(new Vector2(0, 0), speed).SetUpdate(true);
-        optionsMenu.DOAnchorPos(new Vector2(-500, 0), speed).SetUpdate(true);
-        levelsMenu.DOAnchorPos(new Vector2(-500, 0), speed).SetUpdate(true);
+        optionsMenu.DOAnchorPos(new Vector2(-800, 0), speed).SetUpdate(true);
+        levelsMenu.DOAnchorPos(new Vector2(-800, 0), speed).SetUpdate(true);
     }
     public void QuitGame()
     {
