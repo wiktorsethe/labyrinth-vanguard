@@ -30,7 +30,8 @@ public class ObjectDrag : MonoBehaviour
     }
     private bool IsCollidingWithPlayer()
     {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(boxCollider.bounds.center, boxCollider.bounds.size, 0f);
+        Vector2 newSize = new Vector2(boxCollider.bounds.size.x + 2 * 0.5f, boxCollider.bounds.size.y + 2 * 0.5f);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(boxCollider.bounds.center, newSize, 0f);
         foreach (Collider2D collider in colliders)
         {
             if (collider.CompareTag("Player"))

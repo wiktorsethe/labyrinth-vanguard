@@ -9,7 +9,7 @@ TagManager:
   - Trap
   - Gem
   - Wall
-  - Pad
+  - NoCollider
   layers:
   - Default
   - TransparentFX
