@@ -6,5 +6,5 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public int gems;
-    public int highscore;
+    public int levelUnlocked;
 }

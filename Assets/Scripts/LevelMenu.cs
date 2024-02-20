@@ -12,6 +12,7 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject winMenu;
     [SerializeField] private TMP_Text timerText;
+    [SerializeField] private PlayerData playerData;
     private DateTime startTime;
     private DateTime endTime;
     private DateTime pauseStartTime;
@@ -42,6 +43,7 @@ public class LevelMenu : MonoBehaviour
     }
     public void Win()
     {
+        if (playerData.levelUnlocked == PlayerPrefs.GetInt("LevelNumber")) playerData.levelUnlocked = PlayerPrefs.GetInt("LevelNumber");
         endTime = DateTime.Now;
         Time.timeScale = 0f;
         winMenu.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetUpdate(UpdateType.Normal, true).OnComplete(CollectedGems);
@@ -80,5 +82,11 @@ public class LevelMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
+    }
+    public void Next()
+    {
+        Time.timeScale = 1f;
+        PlayerPrefs.SetInt("LevelNumber", PlayerPrefs.GetInt("LevelNumber") + 1);
+        SceneManager.LoadScene(1);
     }
 }
