@@ -16,6 +16,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Sprite lockedDoors;
     private List<GameObject> doors = new List<GameObject>();
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private Animator transition;
+    [SerializeField] private GameObject levelLoader;
     private void Start()
     {
         mainMenu.DOAnchorPos(Vector2.zero, speed).SetUpdate(true);
@@ -65,9 +67,16 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
-    public void LoadLevel(int levelIndex)
+    public void ChooseLevel(int levelIndex)
     {
         PlayerPrefs.SetInt("LevelNumber", levelIndex);
+        StartCoroutine("LoadLevel");
+    }
+    private IEnumerator LoadLevel()
+    {
+        levelLoader.SetActive(true);
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadSceneAsync(1);
     }
 }

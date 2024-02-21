@@ -11,6 +11,7 @@ public class ObjectDelete : MonoBehaviour
     {
         transform.Find("Canvas").transform.Find("Button").gameObject.SetActive(false);
         size = GetComponent<BoxCollider2D>().size;
+        offset = GetComponent<BoxCollider2D>().offset;
     }
     public void DeleteObject()
     {
@@ -30,14 +31,14 @@ public class ObjectDelete : MonoBehaviour
             {
                 Time.timeScale = 0.1f;
                 GetComponent<BoxCollider2D>().size = new Vector2(size.x + bonusSize, size.y);
-                GetComponent<BoxCollider2D>().offset = new Vector2(offset.x - (bonusSize / 2), 0f);
+                GetComponent<BoxCollider2D>().offset = new Vector2(offset.x - (bonusSize / 2), offset.y);
                 transform.Find("Canvas").transform.Find("Button").gameObject.SetActive(true);
             }
             else
             {
                 Time.timeScale = 1f;
                 GetComponent<BoxCollider2D>().size = new Vector2(size.x, size.y);
-                GetComponent<BoxCollider2D>().offset = new Vector2(0f, 0f);
+                GetComponent<BoxCollider2D>().offset = new Vector2(offset.x, offset.y);
                 transform.Find("Canvas").transform.Find("Button").gameObject.SetActive(false);
             }
         }

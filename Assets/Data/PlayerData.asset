@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   gems: 0
-  levelUnlocked: 2
+  levelUnlocked: 1

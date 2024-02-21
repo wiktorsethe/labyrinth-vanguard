@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spikedBallPrefab: {fileID: 5789687918705089892, guid: 4fb46e00da9e8ec469fb71d48928808c, type: 3}
   chainPrefab: {fileID: 6072177805642182798, guid: 8900fc742fd57a246aa79cdbe9a4a03b, type: 3}
-  radius: 3.18
+  radius: 8
   angles: 90
   startingAngle: 225
   rotationSpeed: 30

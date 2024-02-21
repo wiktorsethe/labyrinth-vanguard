@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System;
+using System.Collections;
+
 public class LevelMenu : MonoBehaviour
 {
     [SerializeField] private GameObject platformPrefab;
@@ -18,14 +20,18 @@ public class LevelMenu : MonoBehaviour
     private DateTime pauseStartTime;
     private TimeSpan pauseTime;
     private ItemCollector itemCollector;
+    [SerializeField] private Animator transition;
+    [SerializeField] private GameObject levelLoader;
     private void Start()
     {
         itemCollector = GameObject.FindObjectOfType(typeof(ItemCollector)) as ItemCollector;
 
         pauseMenu.GetComponent<CanvasGroup>().alpha = 0f;
         pauseMenu.GetComponent<CanvasGroup>().interactable = false;
+        pauseMenu.GetComponent<CanvasGroup>().blocksRaycasts = false;
         winMenu.GetComponent<CanvasGroup>().alpha = 0f;
         winMenu.GetComponent<CanvasGroup>().interactable = false;
+        winMenu.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         startTime = DateTime.Now;
     }
@@ -48,6 +54,7 @@ public class LevelMenu : MonoBehaviour
         Time.timeScale = 0f;
         winMenu.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetUpdate(UpdateType.Normal, true).OnComplete(CollectedGems);
         winMenu.GetComponent<CanvasGroup>().interactable = true;
+        winMenu.GetComponent<CanvasGroup>().blocksRaycasts = true;
         TimeSpan allTime = endTime - startTime - pauseTime;
         timerText.text = String.Format("Time: {0:D2}:{1:D2}", allTime.Minutes, allTime.Seconds);
     }
@@ -65,6 +72,7 @@ public class LevelMenu : MonoBehaviour
         Time.timeScale = 0f;
         pauseMenu.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetUpdate(UpdateType.Normal, true);
         pauseMenu.GetComponent<CanvasGroup>().interactable = true;
+        pauseMenu.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
     public void Resume()
     {
@@ -72,21 +80,36 @@ public class LevelMenu : MonoBehaviour
         Time.timeScale = 1f;
         pauseMenu.GetComponent<CanvasGroup>().DOFade(0f, 1f).SetUpdate(UpdateType.Normal, true);
         pauseMenu.GetComponent<CanvasGroup>().interactable = false;
+        pauseMenu.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
     public void Restart()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        StartCoroutine("LoadLevel");
     }
     public void Quit()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        StartCoroutine("LoadMenu");
     }
     public void Next()
     {
         Time.timeScale = 1f;
         PlayerPrefs.SetInt("LevelNumber", PlayerPrefs.GetInt("LevelNumber") + 1);
+        StartCoroutine("LoadLevel");
+    }
+    private IEnumerator LoadMenu()
+    {
+        levelLoader.SetActive(true);
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(0);
+    }
+    private IEnumerator LoadLevel()
+    {
+        levelLoader.SetActive(true);
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(1);
     }
 }

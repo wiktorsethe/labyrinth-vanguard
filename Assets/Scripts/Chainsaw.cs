@@ -8,9 +8,13 @@ public class Chainsaw : MonoBehaviour
     [SerializeField] private float speed = 5f;
     private int currentWaypointIndex = 0;
     [SerializeField] private GameObject obj;
+    [SerializeField] private float rotatingLocalSpeed;
     private void Update()
     {
         MoveToWaypoint();
+        float currentRotation = obj.transform.rotation.eulerAngles.z;
+        float newRotation = currentRotation + (rotatingLocalSpeed * Time.deltaTime);
+        obj.transform.rotation = Quaternion.Euler(0f, 0f, newRotation);
     }
     private void MoveToWaypoint()
     {
