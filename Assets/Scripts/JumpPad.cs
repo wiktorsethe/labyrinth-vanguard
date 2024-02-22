@@ -6,6 +6,8 @@ public class JumpPad : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        GetComponent<Animator>().SetTrigger("Start");
+
         Rigidbody2D otherRigidbody = collision.GetComponent<Rigidbody2D>();
 
         if (otherRigidbody != null)

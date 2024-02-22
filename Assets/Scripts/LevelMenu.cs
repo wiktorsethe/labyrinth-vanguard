@@ -13,7 +13,9 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject flipPadPrefab;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject winMenu;
-    [SerializeField] private TMP_Text timerText;
+    [SerializeField] private GameObject deathMenu;
+    [SerializeField] private TMP_Text timerWinText;
+    [SerializeField] private TMP_Text timerDeathText;
     [SerializeField] private PlayerData playerData;
     private DateTime startTime;
     private DateTime endTime;
@@ -32,6 +34,9 @@ public class LevelMenu : MonoBehaviour
         winMenu.GetComponent<CanvasGroup>().alpha = 0f;
         winMenu.GetComponent<CanvasGroup>().interactable = false;
         winMenu.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        deathMenu.GetComponent<CanvasGroup>().alpha = 0f;
+        deathMenu.GetComponent<CanvasGroup>().interactable = false;
+        deathMenu.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         startTime = DateTime.Now;
     }
@@ -51,12 +56,13 @@ public class LevelMenu : MonoBehaviour
     {
         if (playerData.levelUnlocked == PlayerPrefs.GetInt("LevelNumber")) playerData.levelUnlocked = PlayerPrefs.GetInt("LevelNumber");
         endTime = DateTime.Now;
-        Time.timeScale = 0f;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("Win");
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementController>().enabled = false;
         winMenu.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetUpdate(UpdateType.Normal, true).OnComplete(CollectedGems);
         winMenu.GetComponent<CanvasGroup>().interactable = true;
         winMenu.GetComponent<CanvasGroup>().blocksRaycasts = true;
         TimeSpan allTime = endTime - startTime - pauseTime;
-        timerText.text = String.Format("Time: {0:D2}:{1:D2}", allTime.Minutes, allTime.Seconds);
+        timerWinText.text = String.Format("Time: {0:D2}:{1:D2}", allTime.Minutes, allTime.Seconds);
     }
     private void CollectedGems()
     {
@@ -98,12 +104,21 @@ public class LevelMenu : MonoBehaviour
         PlayerPrefs.SetInt("LevelNumber", PlayerPrefs.GetInt("LevelNumber") + 1);
         StartCoroutine("LoadLevel");
     }
+    public void Death()
+    {
+        endTime = DateTime.Now;
+        deathMenu.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetUpdate(UpdateType.Normal, true);
+        deathMenu.GetComponent<CanvasGroup>().interactable = true;
+        deathMenu.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        TimeSpan allTime = endTime - startTime - pauseTime;
+        timerDeathText.text = String.Format("Time: {0:D2}:{1:D2}", allTime.Minutes, allTime.Seconds);
+    }
     private IEnumerator LoadMenu()
     {
         levelLoader.SetActive(true);
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
     }
     private IEnumerator LoadLevel()
     {

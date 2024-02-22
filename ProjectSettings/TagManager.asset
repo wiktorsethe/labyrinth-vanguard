@@ -11,6 +11,7 @@ TagManager:
   - Wall
   - Pad
   - Level
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

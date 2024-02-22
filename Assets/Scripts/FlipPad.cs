@@ -14,6 +14,7 @@ public class FlipPad : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
+            GetComponent<Animator>().SetTrigger("Start");
             playerMovementController.Flip();
         }
     }

@@ -27,7 +27,7 @@ public class PlayerMovementController : MonoBehaviour
         if (!facingRight) obstacleHit = Physics2D.BoxCast(obstacleDetector.position, size, 0, Vector2.left, 0.1f);
         else if(facingRight) obstacleHit = Physics2D.BoxCast(obstacleDetector.position, size, 0, Vector2.right, 0.1f);
 
-        if (obstacleHit.collider != null && !obstacleHit.collider.CompareTag("Pad") && !obstacleHit.collider.CompareTag("Gem"))
+        if (obstacleHit.collider != null && !obstacleHit.collider.CompareTag("Pad") && !obstacleHit.collider.CompareTag("Gem") && !obstacleHit.collider.CompareTag("Trap"))
         {
             return false;
         }
