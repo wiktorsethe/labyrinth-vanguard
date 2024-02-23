@@ -5,5 +5,5 @@ The project is called Labyrinth Vanguard - the game involves strategically placi
 
 ## How to play?
 You can download the game from the Itch.io <br>
-[SOON] <br>
+https://wiktorsethe.itch.io/labyrinth-vanguard <br>
 or download it from here and fire it up in Unity :) <br>
