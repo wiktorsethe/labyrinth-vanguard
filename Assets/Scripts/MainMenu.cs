@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private PlayerData playerData;
     [SerializeField] private Animator transition;
     [SerializeField] private GameObject levelLoader;
+    [SerializeField] private AudioSource buttonSound;
     private void Start()
     {
         mainMenu.DOAnchorPos(Vector2.zero, speed).SetUpdate(true);
@@ -47,28 +48,33 @@ public class MainMenu : MonoBehaviour
     }
     public void Play()
     {
+        buttonSound.Play();
         mainMenu.DOAnchorPos(new Vector2(800, 0), speed).SetUpdate(true);
         optionsMenu.DOAnchorPos(new Vector2(-800, 0), speed).SetUpdate(true);
         levelsMenu.DOAnchorPos(new Vector2(0, 0), speed).SetUpdate(true);
     }
     public void Options()
     {
+        buttonSound.Play();
         mainMenu.DOAnchorPos(new Vector2(800, 0), speed).SetUpdate(true);
         optionsMenu.DOAnchorPos(new Vector2(0, 0), speed).SetUpdate(true);
         levelsMenu.DOAnchorPos(new Vector2(-800, 0), speed).SetUpdate(true);
     }
     public void Main()
     {
+        buttonSound.Play();
         mainMenu.DOAnchorPos(new Vector2(0, 0), speed).SetUpdate(true);
         optionsMenu.DOAnchorPos(new Vector2(-800, 0), speed).SetUpdate(true);
         levelsMenu.DOAnchorPos(new Vector2(-800, 0), speed).SetUpdate(true);
     }
     public void QuitGame()
     {
+        buttonSound.Play();
         Application.Quit();
     }
     public void ChooseLevel(int levelIndex)
     {
+        buttonSound.Play();
         PlayerPrefs.SetInt("LevelNumber", levelIndex);
         StartCoroutine("LoadLevel");
     }

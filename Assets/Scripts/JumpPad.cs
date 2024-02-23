@@ -12,9 +12,12 @@ public class JumpPad : MonoBehaviour
 
         if (otherRigidbody != null)
         {
+            GameObject.FindGameObjectWithTag("Pads").GetComponent<AudioSource>().Play();
             float jumpForce = 10f;
             Vector2 velocity = otherRigidbody.velocity;
             otherRigidbody.AddForce(Vector2.up * (velocity.magnitude + jumpForce), ForceMode2D.Impulse);
+            GameObject.FindGameObjectWithTag("Jump").GetComponent<AudioSource>().Play();
+            Debug.Log(velocity + ", " + (Vector2.up * (velocity.magnitude + jumpForce), ForceMode2D.Impulse));
         }
     }
 }

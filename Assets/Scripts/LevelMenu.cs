@@ -24,6 +24,9 @@ public class LevelMenu : MonoBehaviour
     private ItemCollector itemCollector;
     [SerializeField] private Animator transition;
     [SerializeField] private GameObject levelLoader;
+    [SerializeField] private AudioSource winSound;
+    [SerializeField] private AudioSource buttonSound;
+    [SerializeField] private AudioSource deathSound;
     private void Start()
     {
         itemCollector = GameObject.FindObjectOfType(typeof(ItemCollector)) as ItemCollector;
@@ -42,18 +45,23 @@ public class LevelMenu : MonoBehaviour
     }
     public void SpawnPlatform()
     {
+        buttonSound.Play();
         Instantiate(platformPrefab, new Vector2(0f, 0f), Quaternion.identity);
     }
     public void SpawnJumpPad()
     {
+        buttonSound.Play();
         Instantiate(jumpPadPrefab, new Vector2(0f, 0f), Quaternion.identity);
     }
     public void SpawnFlipPad()
     {
+        buttonSound.Play();
         Instantiate(flipPadPrefab, new Vector2(0f, 0f), Quaternion.identity);
     }
     public void Win()
     {
+        GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Stop();
+        winSound.Play();
         if (playerData.levelUnlocked == PlayerPrefs.GetInt("LevelNumber")) playerData.levelUnlocked = PlayerPrefs.GetInt("LevelNumber");
         endTime = DateTime.Now;
         GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("Win");
@@ -74,6 +82,7 @@ public class LevelMenu : MonoBehaviour
     }
     public void Pause()
     {
+        buttonSound.Play();
         pauseStartTime = DateTime.Now;
         Time.timeScale = 0f;
         pauseMenu.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetUpdate(UpdateType.Normal, true);
@@ -82,6 +91,7 @@ public class LevelMenu : MonoBehaviour
     }
     public void Resume()
     {
+        buttonSound.Play();
         pauseTime += DateTime.Now - pauseStartTime;
         Time.timeScale = 1f;
         pauseMenu.GetComponent<CanvasGroup>().DOFade(0f, 1f).SetUpdate(UpdateType.Normal, true);
@@ -90,22 +100,27 @@ public class LevelMenu : MonoBehaviour
     }
     public void Restart()
     {
+        buttonSound.Play();
         Time.timeScale = 1f;
         StartCoroutine("LoadLevel");
     }
     public void Quit()
     {
+        buttonSound.Play();
         Time.timeScale = 1f;
         StartCoroutine("LoadMenu");
     }
     public void Next()
     {
+        buttonSound.Play();
         Time.timeScale = 1f;
         PlayerPrefs.SetInt("LevelNumber", PlayerPrefs.GetInt("LevelNumber") + 1);
         StartCoroutine("LoadLevel");
     }
     public void Death()
     {
+        GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().Stop();
+        deathSound.Play();
         endTime = DateTime.Now;
         deathMenu.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetUpdate(UpdateType.Normal, true);
         deathMenu.GetComponent<CanvasGroup>().interactable = true;

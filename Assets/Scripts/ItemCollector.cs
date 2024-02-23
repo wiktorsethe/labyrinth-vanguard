@@ -10,7 +10,7 @@ public class ItemCollector : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Gem"))
         {
-            //collectSound.Play();
+            GameObject.FindGameObjectWithTag("Collect").GetComponent<AudioSource>().Play();
             Destroy(collision.gameObject);
             playerData.gems += 3;
             collectedGems += 1;

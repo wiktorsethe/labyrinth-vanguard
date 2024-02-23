@@ -45,7 +45,11 @@ public class VolumeManager : MonoBehaviour
     }
     public void LoadMusic()
     {
+        musicAudio = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
         musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        GameObject[] musicObj = GameObject.FindGameObjectsWithTag("Music");
+        if (musicObj.Length > 1) Destroy(musicObj[1]);
+        DontDestroyOnLoad(musicObj[0]);
     }
     public void LoadSoundEffects()
     {

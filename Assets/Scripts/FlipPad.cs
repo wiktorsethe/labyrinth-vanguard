@@ -14,6 +14,7 @@ public class FlipPad : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
+            GameObject.FindGameObjectWithTag("Pads").GetComponent<AudioSource>().Play();
             GetComponent<Animator>().SetTrigger("Start");
             playerMovementController.Flip();
         }
